@@ -62,6 +62,7 @@ public class WebSecurityConfig {
                         authorizeRequests
                                 .requestMatchers("/api/auth/**").permitAll()  // Allow public access to auth endpoints
                                 .requestMatchers("/error").permitAll()  // Allow public access to error page
+                                .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
                                 .requestMatchers("/api/user/**").authenticated()  // Protect user endpoints
                                 .anyRequest().authenticated()  // All other requests need authentication
                 )
