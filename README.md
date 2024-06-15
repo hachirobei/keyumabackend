@@ -57,4 +57,19 @@ Some APIs might require authentication. Ensure to include the necessary authenti
 
 ---
 
+## Contribution Guidelines
+
+### Branching Strategy
+
+- All new features and bug fixes should be developed in feature branches.
+- Feature branches should be created from the `develop` branch.
+- The `master` branch is protected and should only contain stable code.
+
+### Workflow
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/hachirobei/keyumabackend.git
+   cd keyumabackend
+
 Enjoy using the Keyuma Backend Management System! If you have any questions or need further assistance, feel free to reach out.
