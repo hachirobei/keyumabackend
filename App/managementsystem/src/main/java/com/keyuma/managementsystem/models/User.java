@@ -52,4 +52,7 @@ public class User {
         this.email = email;
         this.password = password;
     }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<FamilyMember> familyMembers = new HashSet<>();
 }
