@@ -1,9 +1,11 @@
 package com.keyuma.managementsystem.payload.request;
 
+import com.keyuma.managementsystem.models.EGender;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Setter
@@ -14,7 +16,7 @@ public class FamilyMemberRequest {
     @Max(100)
     private String firstName;
 
-    @NotNull
+    @Null
     @Max(100)
     private String lastName;
 
@@ -23,7 +25,7 @@ public class FamilyMemberRequest {
     private String phone;
 
     @NotNull
-    private String gender;
+    private EGender gender;
 
     @NotNull
     private Date birthdate;
@@ -51,14 +53,14 @@ public class FamilyMemberRequest {
 
     @NotNull
     @Pattern(regexp = "[0-9]{5}" )
-    private Integer postcode;
+    private String postcode;
 
     @NotNull
     @Size(max = 50)
     private String country;
 
     @NotNull
-    private boolean statusMarried;
+    private Boolean statusMarried;
 
     @Null
     @Size(max = 100)

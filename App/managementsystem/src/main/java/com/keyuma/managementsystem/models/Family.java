@@ -33,4 +33,8 @@ public class Family {
     @OneToMany(mappedBy = "family", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<FamilyContribution> familyContributions = new HashSet<>();
 
+
+    public Family(String name) {
+        this.name = name;
+    }
 }

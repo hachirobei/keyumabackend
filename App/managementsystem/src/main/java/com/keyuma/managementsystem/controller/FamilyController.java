@@ -1,5 +1,6 @@
 package com.keyuma.managementsystem.controller;
 
+import com.keyuma.managementsystem.payload.request.FamilyRequest;
 import com.keyuma.managementsystem.payload.response.ApiResponse;
 import com.keyuma.managementsystem.payload.response.MessageResponse;
 import com.keyuma.managementsystem.service.FamilyService;
@@ -19,6 +20,32 @@ public class FamilyController {
     private FamilyService familyService;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN) or hasRole('MODERATOR') or hasRole('USER')")
+    public ResponseEntity<ApiResponse<MessageResponse>> addFamily(@RequestBody FamilyRequest familyRequest){
+        logger.debug("Adding family with ID:{}",familyRequest.getName());
+        try{
+            ApiResponse<MessageResponse> response = familyService.addFamily(familyRequest);
+            return ResponseEntity.ok(response);
+        }catch (Exception e){
+            logger.error("Error adding family :{}",e.getMessage());
+            return ResponseEntity.status(500).body(new ApiResponse<>(false,"An unexpected error occurred",null));
+        }
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN) or hasRole('MODERATOR')")
+    public ResponseEntity<ApiResponse<MessageResponse>> updateFamily(@PathVariable Long id, @RequestBody FamilyRequest familyRequest){
+        logger.debug("Updating family with ID:{}",id);
+        try{
+            ApiResponse<MessageResponse> response = familyService.updateFamily(id,familyRequest);
+            return ResponseEntity.ok(response);
+        }catch (Exception e){
+            logger.error("Error updating family with ID {}:{}",id,e.getMessage());
+            return  ResponseEntity.status(500).body(new ApiResponse<>(false,"An unexpected error occurred",null));
+        }
+    }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")

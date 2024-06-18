@@ -13,6 +13,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.util.Date;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -52,7 +54,7 @@ public class FamilyMember {
     private EGender gender;
 
     @NotNull
-    private LocalDate birthDate;
+    private Date birthDate;
 
     @Size(max = 15)
     private String phone;
@@ -93,4 +95,21 @@ public class FamilyMember {
     @ManyToOne
     @JoinColumn(name = "spouse_id")
     private FamilyMember spouse;
+
+    public FamilyMember(String firstName, String lastName, EGender gender, Date birthDate, String phone, String email, String address1, String address2, String address3, String postcode, String city, String country, Boolean statusMarried, String work) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.phone = phone;
+        this.email = email;
+        this.address1 = address1;
+        this.address2 = address2;
+        this.address3 = address3;
+        this.postcode = postcode;
+        this.city = city;
+        this.country = country;
+        this.statusMarried = statusMarried;
+        this.work = work;
+    }
 }
