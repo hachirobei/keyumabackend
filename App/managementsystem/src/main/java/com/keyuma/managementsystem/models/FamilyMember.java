@@ -41,7 +41,11 @@ public class FamilyMember {
 
     @NotBlank
     @Size(max = 100)
-    private String name;
+    private String firstName;
+
+    @NotBlank
+    @Size(max = 100)
+    private String lastName;
 
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -89,5 +93,4 @@ public class FamilyMember {
     @ManyToOne
     @JoinColumn(name = "spouse_id")
     private FamilyMember spouse;
-
 }
