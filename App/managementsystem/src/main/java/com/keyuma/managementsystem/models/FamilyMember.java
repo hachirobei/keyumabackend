@@ -1,15 +1,6 @@
 package com.keyuma.managementsystem.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -49,9 +40,9 @@ public class FamilyMember {
     @Size(max = 100)
     private String lastName;
 
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    private EGender gender;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "gender_id")
+    private Gender gender;
 
     @NotNull
     private Date birthDate;
@@ -96,7 +87,7 @@ public class FamilyMember {
     @JoinColumn(name = "spouse_id")
     private FamilyMember spouse;
 
-    public FamilyMember(String firstName, String lastName, EGender gender, Date birthDate, String phone, String email, String address1, String address2, String address3, String postcode, String city, String country, Boolean statusMarried, String work) {
+    public FamilyMember(String firstName, String lastName, Gender gender, Date birthDate, String phone, String email, String address1, String address2, String address3, String postcode, String city, String country, Boolean statusMarried, String work) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
