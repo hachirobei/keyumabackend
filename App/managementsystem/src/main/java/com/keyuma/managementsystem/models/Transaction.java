@@ -26,7 +26,7 @@ public class Transaction {
     @NotNull
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
-    private VerificationStatus isVerify = VerificationStatus.REJECTED;
+    private EVerificationStatus isVerify = EVerificationStatus.REJECTED;
 
     @NotNull
     private Date transactionDate;

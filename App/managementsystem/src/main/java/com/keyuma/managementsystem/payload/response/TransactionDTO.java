@@ -10,13 +10,15 @@ import java.util.Date;
 public class TransactionDTO {
     private Long id;
     private Long contributionId;
-    private double amount;
+    private Double amount;
+    private Integer isVerify;
     private Date transactionDate;
 
-    public TransactionDTO(Long id, Long contributionId, double amount, Date transactionDate) {
+    public TransactionDTO(Long id, Long contributionId, Double amount, Integer isVerify, Date transactionDate) {
         this.id = id;
         this.contributionId = contributionId;
         this.amount = amount;
+        this.isVerify = isVerify;
         this.transactionDate = transactionDate;
     }
 }

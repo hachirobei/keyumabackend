@@ -17,5 +17,8 @@ public class TransactionRequest {
     private Double amount;
 
     @NotNull
+    private Integer isVerify;
+
+    @NotNull
     private Date transactionDate;
 }
