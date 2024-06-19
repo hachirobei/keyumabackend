@@ -20,6 +20,10 @@ public class Transaction {
     @JoinColumn(name = "contribution_id", nullable = false)
     private Contribution contribution;
 
+    @ManyToOne
+    @JoinColumn(name = "family_member_id", nullable = false)
+    private FamilyMember familyMember;
+
     @NotNull
     private Double amount;
 

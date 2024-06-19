@@ -14,6 +14,9 @@ public class TransactionRequest {
     private Long contributionId;
 
     @NotNull
+    private Long familyMemberId;
+
+    @NotNull
     private Double amount;
 
     @NotNull
