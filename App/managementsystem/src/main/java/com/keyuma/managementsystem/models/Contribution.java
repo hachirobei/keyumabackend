@@ -8,7 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Column;
-import java.time.LocalDate;
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,8 +26,8 @@ public class Contribution {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "family_contribution_id", nullable = false)
-    private FamilyContribution familyContribution;
+    @JoinColumn(name = "contribution_plan_id", nullable = false)
+    private ContributionPlan contributionPlan;
 
     @ManyToOne
     @JoinColumn(name = "family_member_id", nullable = false)
@@ -36,7 +37,7 @@ public class Contribution {
     private Double amount;
 
     @Column(nullable = false)
-    private LocalDate date;
+    private Date date;
 
     // Getters and setters
 }
