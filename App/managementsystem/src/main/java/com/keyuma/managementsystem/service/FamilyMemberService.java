@@ -99,7 +99,21 @@ public class FamilyMemberService {
     public ApiResponse<MessageResponse> updateFamilyMember(Long id, FamilyMemberRequest familyMemberRequest){
         FamilyMember familyMember = familyMemberRepository.findById(id)
                 .orElseThrow(()-> new FamilyMemberException("Family member not found"));
+
         familyMember.setFirstName(familyMemberRequest.getFirstName());
+        familyMember.setLastName(familyMemberRequest.getLastName());
+        familyMember.setGender(familyMemberRequest.getGender());
+        familyMember.setBirthDate(familyMemberRequest.getBirthdate());
+        familyMember.setPhone(familyMemberRequest.getPhone());
+        familyMember.setEmail(familyMemberRequest.getEmail());
+        familyMember.setAddress1(familyMemberRequest.getAddress1());
+        familyMember.setAddress2(familyMemberRequest.getAddress2());
+        familyMember.setAddress3(familyMemberRequest.getAddress3());
+        familyMember.setPostcode(familyMemberRequest.getPostcode());
+        familyMember.setCity(familyMemberRequest.getCity());
+        familyMember.setCountry(familyMemberRequest.getCountry());
+        familyMember.setStatusMarried(familyMemberRequest.getStatusMarried());
+        familyMember.setWork(familyMemberRequest.getWork());
         familyMemberRepository.save(familyMember);
 
         return new ApiResponse<>(true, "Family member updated successfully", new MessageResponse("Family member updated successfully!"));

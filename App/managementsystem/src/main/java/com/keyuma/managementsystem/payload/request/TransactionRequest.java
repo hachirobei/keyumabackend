@@ -6,16 +6,16 @@ import lombok.Setter;
 
 import java.util.Date;
 
-@Setter
 @Getter
-public class ContributionRequest {
+@Setter
+public class TransactionRequest {
 
     @NotNull
-    private Long ContributionPlanId;
+    private Long contributionId;
 
     @NotNull
-    private Long familyMemberId;
+    private Double amount;
 
     @NotNull
-    private Date date;
+    private Date transactionDate;
 }
