@@ -24,5 +24,10 @@ public class Transaction {
     private Double amount;
 
     @NotNull
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    private VerificationStatus isVerify = VerificationStatus.REJECTED;
+
+    @NotNull
     private Date transactionDate;
 }
