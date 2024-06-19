@@ -1,6 +1,7 @@
 package com.keyuma.managementsystem.service;
 
 import com.keyuma.managementsystem.exception.FamilyException;
+import com.keyuma.managementsystem.exception.UserException;
 import com.keyuma.managementsystem.models.Family;
 import com.keyuma.managementsystem.models.User;
 import com.keyuma.managementsystem.payload.request.FamilyRequest;
@@ -21,18 +22,28 @@ public class FamilyService {
     @Autowired
     private FamilyRepository familyRepository;
 
-    public PagedApiResponse<Family, FamilyDTO> getAllUsers(int page, int size) {
+    public PagedApiResponse<Family, FamilyDTO> getAllFamily(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Family> familyPage = familyRepository.findAllById(pageable);
+        Page<Family> familyPage = familyRepository.findAll(pageable);
 
-        List<FamilyDTO> FamilyDTOs = familyPage.getContent().stream()
-                .map(user -> new FamilyDTO(
+        List<FamilyDTO> familyDTOs = familyPage.getContent().stream()
+                .map(family -> new FamilyDTO(
                         family.getId(),
-                        family.name()).collect(Collectors.toList());
+                        family.getName()))
+                .collect(Collectors.toList());
 
-        return new PagedApiResponse<>(true, "All users retrieved successfully", familyPage, userDTOs);
+        return new PagedApiResponse<>(true, "All family retrieved successfully", familyPage, familyDTOs);
     }
 
+    public FamilyDTO getFamilyById(Long id) {
+        Family family = familyRepository.findById(id)
+                .orElseThrow(() -> new FamilyException("Family not found!"));
+
+        return new FamilyDTO(
+                family.getId(),
+                family.getName()
+        );
+    }
 
     public ApiResponse<MessageResponse> addFamily(FamilyRequest familyRequest){
 

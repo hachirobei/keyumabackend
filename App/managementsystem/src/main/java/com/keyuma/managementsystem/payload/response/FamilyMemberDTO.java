@@ -14,12 +14,12 @@ public class FamilyMemberDTO {
     private String lastName;
     private String phone;
     private String gender;
-    private Date birthdate;
+    private Date birthDate;
     private String email;
     private String address1;
     private String address2;
     private String address3;
-    private Integer postcode;
+    private String postcode;
     private String city;
     private String country;
     private Boolean statusMarried;
@@ -27,13 +27,13 @@ public class FamilyMemberDTO {
     private String user_id;
 
 
-    public FamilyMemberDTO(Long id, String firstName, String lastName, String phone, String gender, Date birthdate, String email, String address1, String address2, String address3, Integer postcode, String city, String country, Boolean statusMarried, String work, String user_id) {
+    public FamilyMemberDTO(Long id, String firstName, String lastName, String phone, String gender, Date birthDate, String email, String address1, String address2, String address3, String postcode, String city, String country, Boolean statusMarried, String work) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.gender = gender;
-        this.birthdate = birthdate;
+        this.birthDate = birthDate;
         this.email = email;
         this.address1 = address1;
         this.address2 = address2;
@@ -43,6 +43,5 @@ public class FamilyMemberDTO {
         this.country = country;
         this.statusMarried = statusMarried;
         this.work = work;
-        this.user_id = user_id;
     }
 }

@@ -1,11 +1,10 @@
 package com.keyuma.managementsystem.payload.request;
 
-import com.keyuma.managementsystem.models.EGender;
+import com.keyuma.managementsystem.models.Gender;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 @Setter
@@ -25,7 +24,7 @@ public class FamilyMemberRequest {
     private String phone;
 
     @NotNull
-    private EGender gender;
+    private Gender gender;
 
     @NotNull
     private Date birthdate;

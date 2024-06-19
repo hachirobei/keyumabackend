@@ -1,8 +1,8 @@
 package com.keyuma.managementsystem.controller;
 
+import com.keyuma.managementsystem.models.FamilyMember;
 import com.keyuma.managementsystem.payload.request.FamilyMemberRequest;
-import com.keyuma.managementsystem.payload.response.ApiResponse;
-import com.keyuma.managementsystem.payload.response.MessageResponse;
+import com.keyuma.managementsystem.payload.response.*;
 import com.keyuma.managementsystem.service.FamilyMemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +20,35 @@ public class FamilyMemberController {
     private FamilyMemberService familyMemberService;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @GetMapping("/all")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<PagedApiResponse<FamilyMember, FamilyMemberDTO>>> allAccess(@RequestParam(defaultValue = "0") int page,
+                                                                                  @RequestParam(defaultValue = "10") int size) {
+        logger.debug("Fetching all family members with pagination: page = {}, size = {}", page, size);
+        try {
+            PagedApiResponse<FamilyMember, FamilyMemberDTO> response = familyMemberService.getAllFamilyMember(page, size);
+            logger.debug("Successfully fetched family members");
+            return ResponseEntity.ok(new ApiResponse<>(true, "All family members retrieved successfully", response));
+        } catch (Exception e) {
+            logger.error("Error fetching family members: {}", e.getMessage(), e);
+            return ResponseEntity.status(500).body(new ApiResponse<>(false, "An unexpected error occurred", null));
+        }
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<FamilyMemberDTO>> getUserById(@PathVariable Long id) {
+        logger.debug("Fetching family with ID: {}", id);
+        try {
+            FamilyMemberDTO familyMemberDTO = familyMemberService.getFamilyMemberById(id);
+            logger.debug("Successfully fetched family member with ID: {}", id);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Family retrieved successfully", familyMemberDTO));
+        } catch (Exception e) {
+            logger.error("Error fetching family with ID {}: {}", id, e.getMessage(), e);
+            return ResponseEntity.status(500).body(new ApiResponse<>(false, "An unexpected error occurred", null));
+        }
+    }
 
     @PostMapping("/")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR') or hasRole('USER')")
