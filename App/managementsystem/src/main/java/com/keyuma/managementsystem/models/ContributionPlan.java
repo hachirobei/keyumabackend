@@ -20,6 +20,12 @@ public class ContributionPlan {
     private Long id;
 
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private Integer year;
+
+    @Column(nullable = false)
     private Double defaultMonthlyAmount;
 
     @Column(nullable = false)
@@ -31,5 +37,12 @@ public class ContributionPlan {
     @Column(nullable = false)
     private Date endDate;
 
-    // Getters and setters
+    public ContributionPlan(String name, Integer year, Double defaultMonthlyAmount, Double defaultYearlyAmount, Date startDate, Date endDate) {
+        this.name = name;
+        this.year = year;
+        this.defaultMonthlyAmount = defaultMonthlyAmount;
+        this.defaultYearlyAmount = defaultYearlyAmount;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 }

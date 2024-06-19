@@ -1,5 +1,6 @@
 package com.keyuma.managementsystem.payload.request;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,15 +11,21 @@ import java.util.Date;
 @Setter
 public class ContributionPlanRequest {
 
-    @NotNull
+    @NotBlank
+    private String name;
+
+    @NotBlank
+    private Integer year;
+
+    @NotBlank
     private Double defaultMonthlyAmount;
 
-    @NotNull
+    @NotBlank
     private Double defaultYearlyAmount;
 
-    @NotNull
+    @NotBlank
     private Date startDate;
 
-    @NotNull
+    @NotBlank
     private Date endDate;
 }

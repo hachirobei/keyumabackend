@@ -27,14 +27,18 @@ public class ContributionService {
     @Autowired
     FamilyMemberRepository familyMemberRepository;
 
-    public ApiResponse<MessageResponse> getContributionById(Long id){
+    public ApiResponse<ContributionDTO> getContributionById(Long id){
         Contribution contribution = contributionRepository.findById(id)
                 .orElseThrow(() -> new ContributionException("Contribution not found"));
 
-        ContributionDTO contributionDTO = new TransactionDTO(
+        ContributionDTO contributionDTO = new ContributionDTO(
                 contribution.getId(),
-                contribution.getContributionPlan().g
-        )
+                contribution.getContributionPlan().getId(),
+                contribution.getFamilyMember().getId(),
+                contribution.getDate()
+        );
+
+        return new ApiResponse<>(true, "Transaction retrieved successfully",contributionDTO);
     }
 
     public ApiResponse<MessageResponse> addContribution(ContributionRequest contributionRequest){
