@@ -6,7 +6,9 @@ import com.keyuma.managementsystem.models.ContributionPlan;
 import com.keyuma.managementsystem.models.FamilyMember;
 import com.keyuma.managementsystem.payload.request.ContributionRequest;
 import com.keyuma.managementsystem.payload.response.ApiResponse;
+import com.keyuma.managementsystem.payload.response.ContributionDTO;
 import com.keyuma.managementsystem.payload.response.MessageResponse;
+import com.keyuma.managementsystem.payload.response.TransactionDTO;
 import com.keyuma.managementsystem.repository.ContributionPlanRepository;
 import com.keyuma.managementsystem.repository.ContributionRepository;
 import com.keyuma.managementsystem.repository.FamilyMemberRepository;
@@ -24,6 +26,33 @@ public class ContributionService {
 
     @Autowired
     FamilyMemberRepository familyMemberRepository;
+
+    public ApiResponse<MessageResponse> getContributionById(Long id){
+        Contribution contribution = contributionRepository.findById(id)
+                .orElseThrow(() -> new ContributionException("Contribution not found"));
+
+        ContributionDTO contributionDTO = new TransactionDTO(
+                contribution.getId(),
+                contribution.getContributionPlan().g
+        )
+    }
+
+    public ApiResponse<MessageResponse> addContribution(ContributionRequest contributionRequest){
+        FamilyMember familyMember = familyMemberRepository.findById(contributionRequest.getFamilyMemberId())
+                .orElseThrow(() -> new ContributionException("Family member not found"));
+
+        ContributionPlan contributionPlan = contributionPlanRepository.findById(contributionRequest.getContributionPlanId())
+                .orElseThrow(() -> new ContributionException("Contribution plan not found"));
+
+        Contribution contribution = new Contribution();
+        contribution.setContributionPlan(contributionPlan);
+        contribution.setFamilyMember(familyMember);
+        contribution.setDate(contributionRequest.getDate());
+
+        contributionRepository.save(contribution);
+
+        return new ApiResponse<>(true, "Contribution added successfully", new MessageResponse("Contribution added successfully!"));
+    }
 
     public ApiResponse<MessageResponse> updateContribution(Long id, ContributionRequest contributionRequest) {
         Contribution contribution = contributionRepository.findById(id)

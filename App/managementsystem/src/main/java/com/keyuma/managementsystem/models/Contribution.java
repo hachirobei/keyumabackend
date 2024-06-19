@@ -34,9 +34,6 @@ public class Contribution {
     private FamilyMember familyMember;
 
     @Column(nullable = false)
-    private Double amount;
-
-    @Column(nullable = false)
     private Date date;
 
     // Getters and setters
