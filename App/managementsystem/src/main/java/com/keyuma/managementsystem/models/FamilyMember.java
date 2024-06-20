@@ -86,6 +86,9 @@ public class FamilyMember {
     @ManyToOne
     @JoinColumn(name = "spouse_id")
     private FamilyMember spouse;
+    
+    @OneToMany(mappedBy = "familyMember", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Transaction> transactions = new HashSet<>();
 
     public FamilyMember(String firstName, String lastName, Gender gender, Date birthDate, String phone, String email, String address1, String address2, String address3, String postcode, String city, String country, Boolean statusMarried, String work) {
         this.firstName = firstName;

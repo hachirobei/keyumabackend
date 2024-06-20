@@ -10,6 +10,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@Table(name = "transactions")
 public class Transaction {
 
     @Id
@@ -25,6 +26,7 @@ public class Transaction {
     private FamilyMember familyMember;
 
     @NotNull
+    @Column(nullable = false)
     private Double amount;
 
     @NotNull
@@ -33,5 +35,7 @@ public class Transaction {
     private EVerificationStatus isVerify = EVerificationStatus.REJECTED;
 
     @NotNull
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date transactionDate;
 }

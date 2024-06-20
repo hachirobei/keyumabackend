@@ -33,7 +33,7 @@ public class TransactionService {
 
     public PagedApiResponse<Transaction, TransactionDTO> getAllTransaction(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Transaction> transactionPage = transactionRepository.findAllById(pageable);
+        Page<Transaction> transactionPage = transactionRepository.findAll(pageable);
 
         List<TransactionDTO> TransactionDTOs = transactionPage.getContent().stream()
                 .map(transaction -> new TransactionDTO(

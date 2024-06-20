@@ -22,18 +22,14 @@ public class Family {
 
     @NotBlank
     @Size(max = 100)
+    @Column(nullable = false, length = 100)
     private String name;
 
     @OneToMany(mappedBy = "family", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<FamilyMember> members = new HashSet<>();
 
-    @OneToMany(mappedBy = "family", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<ContributionPlan> contributionPlans = new HashSet<>();
-
-    @OneToMany(mappedBy = "family", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Transaction> transactions = new HashSet<>();
-
     public Family(String name) {
         this.name = name;
+        this.members = new HashSet<>();
     }
 }

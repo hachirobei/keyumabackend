@@ -10,6 +10,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction,Long> {
 
-    @Query("SELECT t FROM transaction t")
-    Page<Transaction> findAllById(Pageable pageable);
 }
