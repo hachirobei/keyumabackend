@@ -12,7 +12,10 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "contribution_plans")
+@Table(name = "contribution_plans",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "name")
+        })
 public class ContributionPlan {
 
     @Id

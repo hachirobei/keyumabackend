@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ContributionPlanRepository extends JpaRepository<ContributionPlan,Long> {
 
-    boolean existByName(String name);
+    boolean existsByName(String name);
 
-    boolean existByYear(Integer year);
+    boolean existsByYear(Integer year);
 }

@@ -57,11 +57,11 @@ public class ContributionPlanService {
 
     public ApiResponse<MessageResponse> addedContributionPlan(ContributionPlanRequest contributionPlanRequest){
 
-        if(contributionPlanRepository.existByName(contributionPlanRequest.getName())){
+        if(contributionPlanRepository.existsByName(contributionPlanRequest.getName())){
             return new ApiResponse<>(false, "Error: Name is already taken!", null);
         }
 
-        if(contributionPlanRepository.existByYear(contributionPlanRequest.getYear())){
+        if(contributionPlanRepository.existsByYear(contributionPlanRequest.getYear())){
             return new ApiResponse<>(false, "Error: Year is already taken!", null);
         }
 
