@@ -64,7 +64,7 @@ public class FamilyController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN) or hasRole('MODERATOR')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     public ResponseEntity<ApiResponse<MessageResponse>> updateFamily(@PathVariable Long id, @RequestBody FamilyRequest familyRequest){
         logger.debug("Updating family with ID:{}",id);
         try{
