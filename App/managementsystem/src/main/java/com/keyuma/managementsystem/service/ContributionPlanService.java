@@ -3,18 +3,57 @@ package com.keyuma.managementsystem.service;
 import com.keyuma.managementsystem.exception.ContributionPlanException;
 import com.keyuma.managementsystem.models.ContributionPlan;
 import com.keyuma.managementsystem.payload.request.ContributionPlanRequest;
-import com.keyuma.managementsystem.payload.request.ContributionRequest;
-import com.keyuma.managementsystem.payload.response.ApiResponse;
-import com.keyuma.managementsystem.payload.response.MessageResponse;
+import com.keyuma.managementsystem.payload.response.*;
 import com.keyuma.managementsystem.repository.ContributionPlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ContributionPlanService {
 
     @Autowired
     ContributionPlanRepository contributionPlanRepository;
+
+    public PagedApiResponse<ContributionPlan, ContributionPlanDTO> getAllContributionPlan(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ContributionPlan> ContributionPlanPage = contributionPlanRepository.findAll(pageable);
+
+        List<ContributionPlanDTO> ContributionPlanDTOs = ContributionPlanPage.getContent().stream()
+                .map(contributionPlan -> new ContributionPlanDTO(
+                        contributionPlan.getId(),
+                        contributionPlan.getName(),
+                        contributionPlan.getYear(),
+                        contributionPlan.getDefaultYearlyAmount(),
+                        contributionPlan.getDefaultMonthlyAmount(),
+                        contributionPlan.getStartDate(),
+                contributionPlan.getEndDate()))
+                .collect(Collectors.toList());
+
+        return new PagedApiResponse<>(true, "All transaction retrieved successfully", ContributionPlanPage, ContributionPlanDTOs);
+    }
+
+    public ApiResponse<ContributionPlanDTO> getContributionPlanById(Long id){
+        ContributionPlan contributionPlan = contributionPlanRepository.findById(id)
+                .orElseThrow(()-> new ContributionPlanException("Contribution Plan not found"));
+
+        ContributionPlanDTO contributionPlanDTO = new ContributionPlanDTO(
+                contributionPlan.getId(),
+                contributionPlan.getName(),
+                contributionPlan.getYear(),
+                contributionPlan.getDefaultYearlyAmount(),
+                contributionPlan.getDefaultMonthlyAmount(),
+                contributionPlan.getStartDate(),
+                contributionPlan.getEndDate()
+        );
+
+        return new ApiResponse<>(true,"Contribution retrive successfully",contributionPlanDTO);
+    }
 
     public ApiResponse<MessageResponse> addedContributionPlan(ContributionPlanRequest contributionPlanRequest){
 
