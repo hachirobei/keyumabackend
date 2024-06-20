@@ -23,7 +23,7 @@ public class ContributionPlanController {
     private static final Logger logger = LoggerFactory.getLogger(ContributionPlanController.class);
 
     @GetMapping("/")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR)")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     public ResponseEntity<ApiResponse<PagedApiResponse<ContributionPlan,ContributionPlanDTO>>>  allAccess(@RequestParam(defaultValue = "0") int page,
                                                                                                           @RequestParam(defaultValue = "10") int size) {
         logger.debug("Fetching all contribution plan with pagination: page = {}, size = {}", page, size);
@@ -38,7 +38,7 @@ public class ContributionPlanController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR) or hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR') or hasRole('USER')")
     public ResponseEntity<ApiResponse<ContributionPlanDTO>> getContributionPlanById(@PathVariable Long id){
         logger.debug("Fetching contribution plan with ID: {}", id);
         try {
@@ -65,7 +65,7 @@ public class ContributionPlanController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR)")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     public ResponseEntity<ApiResponse<MessageResponse>> updateContributionPlan(@PathVariable Long id, @RequestBody ContributionPlanRequest contributionPlanRequest){
         logger.debug("Update contribution plan with name:{}",contributionPlanRequest.getName());
         try{

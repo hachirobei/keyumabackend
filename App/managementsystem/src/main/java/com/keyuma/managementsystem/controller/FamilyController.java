@@ -51,7 +51,7 @@ public class FamilyController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN) or hasRole('MODERATOR') or hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR') or hasRole('USER')")
     public ResponseEntity<ApiResponse<MessageResponse>> addFamily(@RequestBody FamilyRequest familyRequest){
         logger.debug("Adding family with ID:{}",familyRequest.getName());
         try{
