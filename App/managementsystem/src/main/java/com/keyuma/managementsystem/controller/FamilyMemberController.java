@@ -23,7 +23,7 @@ public class FamilyMemberController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<PagedApiResponse<FamilyMember, FamilyMemberDTO>>> allAccess(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<ApiResponse<PagedApiResponse<FamilyMember, FamilyMemberDTO>>> getAllFamilyMember(@RequestParam(defaultValue = "0") int page,
                                                                                   @RequestParam(defaultValue = "10") int size) {
         logger.debug("Fetching all family members with pagination: page = {}, size = {}", page, size);
         try {

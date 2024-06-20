@@ -24,7 +24,7 @@ public class ContributionPlanController {
 
     @GetMapping("/")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
-    public ResponseEntity<ApiResponse<PagedApiResponse<ContributionPlan,ContributionPlanDTO>>>  allAccess(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<ApiResponse<PagedApiResponse<ContributionPlan,ContributionPlanDTO>>>  getAllContributionPlan(@RequestParam(defaultValue = "0") int page,
                                                                                                           @RequestParam(defaultValue = "10") int size) {
         logger.debug("Fetching all contribution plan with pagination: page = {}, size = {}", page, size);
         try {

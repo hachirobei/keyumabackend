@@ -24,7 +24,7 @@ public class ContributionController {
 
     @GetMapping("/")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
-    public ResponseEntity<ApiResponse<PagedApiResponse<Contribution, ContributionDTO>>> allAccess(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<ApiResponse<PagedApiResponse<Contribution, ContributionDTO>>> getAllContribution(@RequestParam(defaultValue = "0") int page,
                                                                                                   @RequestParam(defaultValue = "10") int size) {
         logger.debug("Fetching all contribution with pagination: page = {}, size = {}", page, size);
         try {

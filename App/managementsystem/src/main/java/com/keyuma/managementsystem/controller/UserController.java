@@ -26,7 +26,7 @@ public class UserController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<PagedApiResponse<User, UserDTO>>> allAccess(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<ApiResponse<PagedApiResponse<User, UserDTO>>> getAllUser(@RequestParam(defaultValue = "0") int page,
                                                                                   @RequestParam(defaultValue = "10") int size) {
         logger.debug("Fetching all users with pagination: page = {}, size = {}", page, size);
         try {

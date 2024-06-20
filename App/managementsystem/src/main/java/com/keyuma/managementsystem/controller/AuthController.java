@@ -10,7 +10,6 @@ import com.keyuma.managementsystem.payload.request.SignupRequest;
 import com.keyuma.managementsystem.payload.request.TokenRefreshRequest;
 import com.keyuma.managementsystem.payload.response.ApiResponse;
 import com.keyuma.managementsystem.payload.response.JwtResponse;
-import com.keyuma.managementsystem.payload.response.MessageResponse;
 import com.keyuma.managementsystem.payload.response.TokenRefreshResponse;
 import com.keyuma.managementsystem.repository.RoleRepository;
 import com.keyuma.managementsystem.repository.UserRepository;
@@ -19,10 +18,12 @@ import com.keyuma.managementsystem.security.services.RefreshTokenService;
 import com.keyuma.managementsystem.security.services.UserDetailsImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -58,35 +59,41 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<ApiResponse<JwtResponse>> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        // Clear the existing authentication context to allow re-login
-        SecurityContextHolder.clearContext();
+        try {
+            // Clear the existing authentication context to allow re-login
+            SecurityContextHolder.clearContext();
 
-        // Authenticate the user
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+            // Authenticate the user
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
-        // Set the authentication context
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            // Set the authentication context
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Generate JWT token
-        String jwt = jwtUtils.generateJwtToken(authentication);
+            // Generate JWT token
+            String jwt = jwtUtils.generateJwtToken(authentication);
 
-        // Log the generated token for debugging purposes
-        System.out.println("Generated JWT Token: " + jwt);
+            // Log the generated token for debugging purposes
+            System.out.println("Generated JWT Token: " + jwt);
 
-        // Create and save refresh token
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        String refreshToken = refreshTokenService.createRefreshToken(userDetails.getId()).getToken();
+            // Create and save refresh token
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            String refreshToken = refreshTokenService.createRefreshToken(userDetails.getId()).getToken();
 
-        // Get user roles
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
+            // Get user roles
+            List<String> roles = userDetails.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.toList());
 
-        JwtResponse jwtResponse = new JwtResponse(jwt, refreshToken, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles);
+            JwtResponse jwtResponse = new JwtResponse(jwt, refreshToken, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles);
 
-        // Return JWT and refresh token in the response
-        return ResponseEntity.ok(new ApiResponse<>(true, "User authenticated successfully", jwtResponse));
+            // Return JWT and refresh token in the response
+            return ResponseEntity.ok(new ApiResponse<>(true, "User authenticated successfully", jwtResponse));
+        }catch (AuthenticationException e) {
+            // Return error response for wrong username or password
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ApiResponse<>(false, "Invalid username or password", null));
+        }
     }
 
     @PostMapping("/signup")
