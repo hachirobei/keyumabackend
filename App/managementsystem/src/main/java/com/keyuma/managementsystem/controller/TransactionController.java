@@ -23,7 +23,7 @@ public class TransactionController {
     private static final Logger logger = LoggerFactory.getLogger(TransactionController.class);
 
     @GetMapping("/")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR)")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     public ResponseEntity<ApiResponse<PagedApiResponse<Transaction, TransactionDTO>>>  allAccess(@RequestParam(defaultValue = "0") int page,
                                                                                                       @RequestParam(defaultValue = "10") int size) {
         logger.debug("Fetching all transaction with pagination: page = {}, size = {}", page, size);
@@ -65,7 +65,7 @@ public class TransactionController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR') or  hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR') or hasRole('USER')")
     public ResponseEntity<ApiResponse<MessageResponse>> updateTransaction(@PathVariable Long id, @RequestBody TransactionRequest transactionRequest){
         logger.debug("Updating transaction with ID: {}", id);
         try {
