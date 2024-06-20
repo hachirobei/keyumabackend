@@ -52,7 +52,7 @@ public class ContributionPlanController {
     }
 
     @PostMapping("/")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR)")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
     public ResponseEntity<ApiResponse<MessageResponse>> addContributionPlan(@RequestBody ContributionPlanRequest contributionPlanRequest){
         logger.debug("Adding contribution plan with name:{}",contributionPlanRequest.getName());
         try{
